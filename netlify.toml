@@ -2,7 +2,7 @@
   command = "npm run build"
   publish = "dist"
 
-# SPA fallback for React Router
+# SPA fallback for client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"

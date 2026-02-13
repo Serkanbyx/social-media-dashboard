@@ -90,16 +90,16 @@ Make sure you have the following installed:
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/REPOSITORY_NAME.git
+git clone https://github.com/YOUR_USERNAME/basic-chess-board-logic.git
 
 # Navigate to project directory
-cd REPOSITORY_NAME
+cd basic-chess-board-logic
 
-# Install dependencies (if applicable)
-# npm install / pip install -r requirements.txt / etc.
+# Install dependencies
+npm install
 
-# Start development server (if applicable)
-# npm start / python app.py / etc.
+# Start development server
+npm run dev
 ```
 
 ## Style Guidelines
@@ -108,15 +108,15 @@ cd REPOSITORY_NAME
 
 We follow semantic commit messages:
 
-| Prefix | Description |
+| Prefix      | Description                           |
 | ----------- | ------------------------------------- |
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation changes |
-| `style:` | Code style changes (formatting, etc.) |
-| `refactor:` | Code refactoring |
-| `test:` | Adding or updating tests |
-| `chore:` | Maintenance tasks |
+| `feat:`     | New feature                           |
+| `fix:`      | Bug fix                               |
+| `docs:`     | Documentation changes                 |
+| `style:`    | Code style changes (formatting, etc.) |
+| `refactor:` | Code refactoring                      |
+| `test:`     | Adding or updating tests              |
+| `chore:`    | Maintenance tasks                     |
 
 **Examples:**
 
@@ -148,12 +148,12 @@ refactor: simplify validation logic
 
 Use descriptive branch names with prefixes:
 
-| Prefix | Use Case | Example |
+| Prefix      | Use Case         | Example                   |
 | ----------- | ---------------- | ------------------------- |
-| `feature/` | New features | `feature/user-auth` |
-| `fix/` | Bug fixes | `fix/login-error` |
-| `hotfix/` | Urgent fixes | `hotfix/security-patch` |
-| `docs/` | Documentation | `docs/api-guide` |
+| `feature/`  | New features     | `feature/user-auth`       |
+| `fix/`      | Bug fixes        | `fix/login-error`         |
+| `hotfix/`   | Urgent fixes     | `hotfix/security-patch`   |
+| `docs/`     | Documentation    | `docs/api-guide`          |
 | `refactor/` | Code refactoring | `refactor/database-layer` |
 
 ## Questions?
