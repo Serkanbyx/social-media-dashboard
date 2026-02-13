@@ -6,11 +6,20 @@ import {
   Edit,
   Trash2,
   Clock,
+  AlertTriangle,
 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   formatNumber,
   formatRelativeTime,
@@ -39,6 +48,7 @@ const statusVariant = {
 export default function PostCard({ post, onEdit, onDelete }: PostCardProps) {
   const config = platformConfig[post.platform];
   const [showMenu, setShowMenu] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   return (
     <Card className="transition-all hover:shadow-md">
@@ -102,7 +112,7 @@ export default function PostCard({ post, onEdit, onDelete }: PostCardProps) {
                   <button
                     onClick={() => {
                       setShowMenu(false);
-                      onDelete(post.id);
+                      setConfirmDelete(true);
                     }}
                     className="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-destructive hover:bg-accent cursor-pointer"
                   >
@@ -159,6 +169,39 @@ export default function PostCard({ post, onEdit, onDelete }: PostCardProps) {
           </span>
         </div>
       </CardContent>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={confirmDelete} onOpenChange={setConfirmDelete}>
+        <DialogContent className="sm:max-w-[400px]">
+          <DialogHeader>
+            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10">
+              <AlertTriangle className="h-6 w-6 text-destructive" />
+            </div>
+            <DialogTitle className="text-center">Delete Post</DialogTitle>
+            <DialogDescription className="text-center">
+              Are you sure you want to delete this post? This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:justify-center">
+            <Button
+              variant="outline"
+              onClick={() => setConfirmDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => {
+                setConfirmDelete(false);
+                onDelete(post.id);
+              }}
+            >
+              Delete
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 }

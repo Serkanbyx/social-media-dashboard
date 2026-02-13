@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, useCallback } from "react";
-import { Plus, FileText } from "lucide-react";
+import { Plus, FileText, AlertCircle, RefreshCw } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   fetchPosts,
@@ -21,7 +21,7 @@ import type { Post } from "@/types";
 /* ===== Posts Page ===== */
 export default function PostsPage() {
   const dispatch = useAppDispatch();
-  const { items, loading, filter, statusFilter, sortOrder, searchQuery } =
+  const { items, loading, error, filter, statusFilter, sortOrder, searchQuery } =
     useAppSelector((state) => state.posts);
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -123,6 +123,26 @@ export default function PostsPage() {
             <Skeleton key={i} className="h-[250px] rounded-xl" />
           ))}
         </div>
+      </div>
+    );
+  }
+
+  /* Error State */
+  if (error && items.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-destructive/50 bg-destructive/5 py-16">
+        <AlertCircle className="h-12 w-12 text-destructive" />
+        <p className="mt-4 text-lg font-medium text-destructive">
+          Failed to load posts
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{error}</p>
+        <button
+          onClick={() => dispatch(fetchPosts())}
+          className="mt-4 inline-flex items-center gap-2 rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground transition-colors hover:bg-destructive/90"
+        >
+          <RefreshCw className="h-4 w-4" />
+          Try Again
+        </button>
       </div>
     );
   }

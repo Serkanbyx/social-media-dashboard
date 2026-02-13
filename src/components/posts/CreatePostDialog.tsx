@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -42,6 +42,23 @@ export default function CreatePostDialog({
   const [image, setImage] = useState(editingPost?.image || "");
 
   const isEditing = !!editingPost;
+
+  /* Sync form fields when editingPost changes */
+  useEffect(() => {
+    if (editingPost) {
+      setPlatform(editingPost.platform);
+      setContent(editingPost.content);
+      setAuthor(editingPost.author);
+      setStatus(editingPost.status);
+      setImage(editingPost.image || "");
+    } else {
+      setPlatform("instagram");
+      setContent("");
+      setAuthor("");
+      setStatus("draft");
+      setImage("");
+    }
+  }, [editingPost]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

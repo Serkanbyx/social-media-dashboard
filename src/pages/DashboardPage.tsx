@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Users, Eye, FileText, TrendingUp } from "lucide-react";
+import { Users, Eye, FileText, TrendingUp, AlertCircle, RefreshCw } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store";
 import {
   fetchDashboardStats,
@@ -17,7 +17,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 /* ===== Dashboard Page ===== */
 export default function DashboardPage() {
   const dispatch = useAppDispatch();
-  const { stats, summary, analytics, analyticsPeriod, loading } =
+  const { stats, summary, analytics, analyticsPeriod, loading, error } =
     useAppSelector((state) => state.dashboard);
   const { items: posts } = useAppSelector((state) => state.posts);
 
@@ -34,6 +34,14 @@ export default function DashboardPage() {
     dispatch(fetchAnalytics(period));
   };
 
+  /* Retry handler for error state */
+  const handleRetry = () => {
+    dispatch(fetchDashboardStats());
+    dispatch(fetchDashboardSummary());
+    dispatch(fetchAnalytics("weekly"));
+    dispatch(fetchPosts());
+  };
+
   /* Loading State */
   if (loading && !summary) {
     return (
@@ -44,6 +52,26 @@ export default function DashboardPage() {
           ))}
         </div>
         <Skeleton className="h-[420px] rounded-xl" />
+      </div>
+    );
+  }
+
+  /* Error State */
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-destructive/50 bg-destructive/5 py-16">
+        <AlertCircle className="h-12 w-12 text-destructive" />
+        <p className="mt-4 text-lg font-medium text-destructive">
+          Something went wrong
+        </p>
+        <p className="mt-1 text-sm text-muted-foreground">{error}</p>
+        <button
+          onClick={handleRetry}
+          className="mt-4 inline-flex items-center gap-2 rounded-md bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground transition-colors hover:bg-destructive/90"
+        >
+          <RefreshCw className="h-4 w-4" />
+          Try Again
+        </button>
       </div>
     );
   }
