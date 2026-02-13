@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "type": "module",
   "description": "A modern social media analytics dashboard built with React, Redux Toolkit, and Recharts",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
