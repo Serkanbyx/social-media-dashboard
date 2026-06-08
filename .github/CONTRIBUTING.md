@@ -108,15 +108,15 @@ cd REPOSITORY_NAME
 
 We follow semantic commit messages:
 
-| Prefix | Description |
+| Prefix      | Description                           |
 | ----------- | ------------------------------------- |
-| `feat:` | New feature |
-| `fix:` | Bug fix |
-| `docs:` | Documentation changes |
-| `style:` | Code style changes (formatting, etc.) |
-| `refactor:` | Code refactoring |
-| `test:` | Adding or updating tests |
-| `chore:` | Maintenance tasks |
+| `feat:`     | New feature                           |
+| `fix:`      | Bug fix                               |
+| `docs:`     | Documentation changes                 |
+| `style:`    | Code style changes (formatting, etc.) |
+| `refactor:` | Code refactoring                      |
+| `test:`     | Adding or updating tests              |
+| `chore:`    | Maintenance tasks                     |
 
 **Examples:**
 
@@ -148,12 +148,12 @@ refactor: simplify validation logic
 
 Use descriptive branch names with prefixes:
 
-| Prefix | Use Case | Example |
+| Prefix      | Use Case         | Example                   |
 | ----------- | ---------------- | ------------------------- |
-| `feature/` | New features | `feature/user-auth` |
-| `fix/` | Bug fixes | `fix/login-error` |
-| `hotfix/` | Urgent fixes | `hotfix/security-patch` |
-| `docs/` | Documentation | `docs/api-guide` |
+| `feature/`  | New features     | `feature/user-auth`       |
+| `fix/`      | Bug fixes        | `fix/login-error`         |
+| `hotfix/`   | Urgent fixes     | `hotfix/security-patch`   |
+| `docs/`     | Documentation    | `docs/api-guide`          |
 | `refactor/` | Code refactoring | `refactor/database-layer` |
 
 ## Questions?

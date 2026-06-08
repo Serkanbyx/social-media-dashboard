@@ -41,9 +41,31 @@ export const dashboardApi = {
   },
 };
 
+/* ===== Posts Persistence ===== */
+const POSTS_STORAGE_KEY = "posts";
+
+/** Load posts from localStorage, falling back to mock data */
+const loadPosts = (): Post[] => {
+  try {
+    const stored = localStorage.getItem(POSTS_STORAGE_KEY);
+    return stored ? (JSON.parse(stored) as Post[]) : [...mockPosts];
+  } catch {
+    return [...mockPosts];
+  }
+};
+
+/** Persist the current posts store to localStorage */
+const persistPosts = (posts: Post[]): void => {
+  try {
+    localStorage.setItem(POSTS_STORAGE_KEY, JSON.stringify(posts));
+  } catch {
+    // Ignore write errors (e.g. storage unavailable or quota exceeded)
+  }
+};
+
 /* ===== Posts API ===== */
-// In-memory store for CRUD operations
-let postsStore = [...mockPosts];
+// In-memory store for CRUD operations, hydrated from localStorage
+let postsStore: Post[] = loadPosts();
 
 export const postsApi = {
   /** Fetch all posts */
@@ -73,6 +95,7 @@ export const postsApi = {
       shares: 0,
     };
     postsStore = [newPost, ...postsStore];
+    persistPosts(postsStore);
     return { data: newPost, status: "success" };
   },
 
@@ -82,22 +105,27 @@ export const postsApi = {
     updates: Partial<Post>
   ): Promise<ApiResponse<Post | null>> {
     await simulateDelay(400);
-    const index = postsStore.findIndex((p) => p.id === id);
-    if (index === -1) {
+    const exists = postsStore.some((p) => p.id === id);
+    if (!exists) {
       return { data: null, status: "error", message: "Post not found" };
     }
-    postsStore[index] = { ...postsStore[index], ...updates };
-    return { data: postsStore[index], status: "success" };
+    postsStore = postsStore.map((p) =>
+      p.id === id ? { ...p, ...updates } : p
+    );
+    persistPosts(postsStore);
+    const updated = postsStore.find((p) => p.id === id) ?? null;
+    return { data: updated, status: "success" };
   },
 
   /** Delete a post */
   async deletePost(id: string): Promise<ApiResponse<boolean>> {
     await simulateDelay(300);
-    const index = postsStore.findIndex((p) => p.id === id);
-    if (index === -1) {
+    const exists = postsStore.some((p) => p.id === id);
+    if (!exists) {
       return { data: false, status: "error", message: "Post not found" };
     }
     postsStore = postsStore.filter((p) => p.id !== id);
+    persistPosts(postsStore);
     return { data: true, status: "success" };
   },
 };

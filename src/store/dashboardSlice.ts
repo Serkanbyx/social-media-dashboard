@@ -75,10 +75,16 @@ const dashboardSlice = createSlice({
       .addCase(fetchDashboardSummary.fulfilled, (state, action) => {
         state.summary = action.payload;
       })
+      .addCase(fetchDashboardSummary.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to fetch summary";
+      })
       /* Analytics */
       .addCase(fetchAnalytics.fulfilled, (state, action) => {
         state.analytics = action.payload.data;
         state.analyticsPeriod = action.payload.period;
+      })
+      .addCase(fetchAnalytics.rejected, (state, action) => {
+        state.error = action.error.message || "Failed to fetch analytics";
       });
   },
 });

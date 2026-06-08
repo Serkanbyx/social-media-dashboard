@@ -9,11 +9,11 @@ A modern, responsive social media analytics dashboard built with React, TypeScri
 
 - **Dashboard Overview** — Real-time stats cards showing total followers, engagement rate, posts, and impressions with trend indicators
 - **Multi-Platform Analytics** — Visual area and bar charts for Instagram, Twitter, Facebook, YouTube, and LinkedIn powered by Recharts
-- **Posts Management** — Full CRUD operations: create, edit, delete, and filter posts by platform, status, or search query
+- **Posts Management** — Full CRUD operations: create, edit, delete, and filter posts by platform, status, or search query, with changes persisted to localStorage across sessions
 - **Dark/Light Mode** — Toggle between themes with persistent localStorage preference and system preference detection
 - **Responsive Design** — Fully responsive layout with collapsible sidebar and off-canvas navigation for mobile devices
 - **State Management** — Centralized state with Redux Toolkit, async thunks, and typed hooks for predictable data flow
-- **Mock API** — Simulated REST API service layer with realistic data and artificial delays for authentic UX
+- **Mock API** — Simulated REST API service layer with realistic data, artificial delays for authentic UX, and localStorage-backed persistence for post mutations
 
 ## Live Demo
 
@@ -118,6 +118,8 @@ const store = configureStore({
 3. API returns data with simulated delays (300–600ms)
 4. Redux state updates trigger component re-renders
 5. Components read state with typed `useAppSelector` hooks
+6. Post mutations (create/update/delete) are persisted to localStorage, so changes survive page reloads
+7. Redundant fetches are skipped via the thunk `condition` option when data is already loaded
 
 ### Theme System
 
@@ -253,6 +255,7 @@ Modify the CSS variables in `src/index.css` to customize the color scheme:
 - ✅ Loading skeletons for async data fetching
 - ✅ Typed Redux hooks and async thunks
 - ✅ Mock API with simulated network delays
+- ✅ localStorage persistence for post mutations across sessions
 - 🔮 [ ] Real API integration with backend
 - 🔮 [ ] User authentication and authorization
 - 🔮 [ ] Real-time data with WebSocket updates

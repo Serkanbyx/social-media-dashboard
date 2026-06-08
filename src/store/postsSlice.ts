@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import type { Post, PostFilter, PostStatus, SortOrder } from "@/types";
 import { postsApi } from "@/services/api";
+import type { RootState } from "./index";
 
 /* ===== State Interface ===== */
 interface PostsState {
@@ -25,10 +26,20 @@ const initialState: PostsState = {
 };
 
 /* ===== Async Thunks ===== */
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const response = await postsApi.getPosts();
-  return response.data;
-});
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async () => {
+    const response = await postsApi.getPosts();
+    return response.data;
+  },
+  {
+    // Skip redundant fetches when posts are already loaded or in flight
+    condition: (_arg, { getState }) => {
+      const { posts } = getState() as RootState;
+      return !posts.loading && posts.items.length === 0;
+    },
+  }
+);
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
