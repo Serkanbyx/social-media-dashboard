@@ -15,6 +15,22 @@ A modern, responsive social media analytics dashboard built with React, TypeScri
 - **State Management** — Centralized state with Redux Toolkit, async thunks, and typed hooks for predictable data flow
 - **Mock API** — Simulated REST API service layer with realistic data, artificial delays for authentic UX, and localStorage-backed persistence for post mutations
 
+## Screenshots
+
+### Dashboard
+
+| Dark Mode | Light Mode |
+| --- | --- |
+| ![Dashboard — Dark Mode](docs/screenshots/dashboard-dark.png) | ![Dashboard — Light Mode](docs/screenshots/dashboard-light.png) |
+
+### Posts
+
+![Posts page with search, filters, and post cards](docs/screenshots/posts-dark.png)
+
+### Create Post Dialog
+
+![Create post dialog with platform, author, content, and status fields](docs/screenshots/create-post-dialog.png)
+
 ## Live Demo
 
 [🚀 View Live Demo](https://social-media-dashboardd.netlify.app/dashboard)
